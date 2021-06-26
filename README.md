@@ -1,4 +1,4 @@
-# Snake_game_embedded_project
+# Snake game Embedded project
 snake game with Nu-LB-NUC140 Microcontroller
 
 ## The code structure
