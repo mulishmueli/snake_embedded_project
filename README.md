@@ -33,4 +33,10 @@ After each progress of the snake the head vertebra is examined for wall injury, 
 
 Due to problems using dynamic allocation to the linked list, we had to pre-allocate memory, a list of 51 cells - a higher number caused display problems, probably due to lack of memory.
 
-![image](https://user-images.githubusercontent.com/68822926/123510080-246abe80-d682-11eb-8340-2dc48da0ec5f.png)
+![image](https://user-images.githubusercontent.com/68822926/123510094-3ba9ac00-d682-11eb-863e-3746d1ba801d.png)
+![image](https://user-images.githubusercontent.com/68822926/123510097-3f3d3300-d682-11eb-9711-037b2f0acbca.png)
+![image](https://user-images.githubusercontent.com/68822926/123510101-419f8d00-d682-11eb-8226-618ea61ca87b.png)
+![image](https://user-images.githubusercontent.com/68822926/123510104-4401e700-d682-11eb-8b2b-7deb8c41974d.png)
+![image](https://user-images.githubusercontent.com/68822926/123510106-47956e00-d682-11eb-804a-1e7bee41ef64.png)
+
+
