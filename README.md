@@ -5,7 +5,7 @@ snake game with Nu-LB-NUC140 Microcontroller
 The main file is **snake.c**. 
 To run this file properly you also need this drivers.
 ![image](https://user-images.githubusercontent.com/68822926/123509870-af4ab980-d680-11eb-9e17-64fab8ffe263.png)
-you can download them from here :  https://www.keil.com/demo/eval/armv4.htm Short registration, no need for license.
+you can download them from here : 
 
 1.KeilMDK : mdk474.exe–ARM/Keilprovide free IDE tool1.Free download from https://www.keil.com/demo/eval/armv4 .Short registration, no need for license
 2.Nu-Link Driver : Nu-Link_Keil_Driver.exe–Nuvotonprovide NuLinkICEdevice driver(NuLinkICE is built-in on Nu-LB-NUC140 learning board)–run it to install this NuLinkdevice driver
