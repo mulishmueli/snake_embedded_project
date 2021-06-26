@@ -4,6 +4,12 @@ snake game with Nu-LB-NUC140 Microcontroller
 ## The code structure
 The main file is **snake.c**. 
 To run this file properly you also need this drivers.
+
+
+
+
+
+
 ![image](https://user-images.githubusercontent.com/68822926/123509870-af4ab980-d680-11eb-9e17-64fab8ffe263.png)
 you can download them from here : 
 
