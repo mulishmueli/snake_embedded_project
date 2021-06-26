@@ -18,6 +18,9 @@ you can download them from here :
 3. NuvotonBSP : NUC140BSP.zip–Nuvoton’sBasic Sample Package including device drivers and sample codes–Just unzip it  (usually it is put under C:\Nuvoton\)
 
 
+video of the project:
+https://drive.google.com/file/d/1KBBrow_GbDenI1-rcMb9Ai1QAHLm_SGy/view?usp=sharing
+
 ## The settings explained
 
 **1. General background**
