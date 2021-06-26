@@ -19,9 +19,16 @@ The Snake game is displayed on the LCD screen of the kit and can be controlled b
 In the game you can choose:
 1. 3 speeds of the snake
 2. With / without collision with walls
-3.With / without obstacles and in addition whether the obstacles will be static or dynamic
+3. With / without obstacles and in addition whether the obstacles will be static or dynamic
 After harming or eating food, the buzzer will beep and flash a red / green LED accordingly.
 The score is displayed on top of a seven-section view of the assessment.
+
+
+
+
+
+
+
 
 ![image](https://user-images.githubusercontent.com/68822926/123510069-187efc80-d682-11eb-9ea2-a60d0f6fcafe.png)
 
