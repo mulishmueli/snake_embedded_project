@@ -72,10 +72,9 @@ int8_t length_snake(list_snake* lst)
 	int8_t length ;
 	length=0;
 	snake* current;
-
 	for (current = lst->head; current != NULL; current = current->next)
 		length++;
-  return length;
+  	return length;
 }
 
 snake allocItem_snake(int8_t x0, int8_t y0,int8_t num_part)
@@ -120,7 +119,6 @@ int8_t deleteLast_part(list_snake* snake_list)
 	{
 		//save reference to last link
 		snake* temp = snake_list->tail;
-
 		//if only one link
 		if (temp->prev == NULL)
 		{
@@ -138,7 +136,7 @@ int8_t deleteLast_part(list_snake* snake_list)
 
 void UART_INT_HANDLE(void)
 {
-	 bt_command='0';
+	bt_command='0';
 	while(UART0->ISR.RDA_IF==1) 
 	{
 		 bt_command=UART0->DATA;
@@ -159,27 +157,28 @@ void Init_RGBLED(void)
 
 void seg_display(int16_t value)
 {
-  int8_t digit;
+  	int8_t digit;
 	digit = value / 1000;
 	close_seven_segment();
 	if(digit)
-	show_seven_segment(3,digit);
-			
-	value = value - digit * 1000;
-	digit = value / 100;
-	close_seven_segment();
-	if(digit)
-	show_seven_segment(2,digit);
-
-	value = value - digit * 100;
-	digit = value / 10;
-	close_seven_segment();
+	{
+		show_seven_segment(3,digit);		
+		value = value - digit * 1000;
+		digit = value / 100;
+		close_seven_segment();
+	}
 	if(digit)
 	{
-	show_seven_segment(1,digit);
-	DrvSYS_Delay(800);
+		show_seven_segment(2,digit);
+		value = value - digit * 100;
+		digit = value / 10;
+		close_seven_segment();
 	}
-	
+	if(digit)
+	{
+		show_seven_segment(1,digit);
+		DrvSYS_Delay(800);
+	}
 	value = value - digit * 10;
 	digit = value;
 	close_seven_segment();
@@ -192,7 +191,6 @@ int8_t search_part(food*  current_food, list_snake* snake_list)
 	
 	while (b != NULL)
 	{
-
 		if ( (b->x0== current_food->x0)&(b->y0== current_food->y0)	)
 		{
 			return 1;
@@ -226,64 +224,58 @@ int8_t check_self_collision(list_snake* snake_list)
 
 int8_t move(list_snake* snake_list,snake* a,int8_t direction)
 {
-	  
-	  int8_t num_part_tail;
-	  if((((snake_list->head->x0)+pixel_size)>127  | snake_list->head->x0<0 | snake_list->head->y0<0 | ((snake_list->head->y0)+pixel_size)>63))
-			return 1;
-	  num_part_tail= snake_list->tail->num_part;
-		RectangleFill(snake_list->tail->x0,snake_list->tail->y0,(snake_list->tail->x0)+pixel_size,(snake_list->tail->y0)+pixel_size,0);
-	  RectangleDraw(1,1,126,62,1) ;
-	  deleteLast_part(snake_list);
-		switch (direction)
-      {
-				case		2 : //up
-				a[num_part_tail] = allocItem_snake(snake_list->head->x0,snake_list->head->y0-pixel_size,num_part_tail);
-				break;
-				
-				case		6 : //right	
+	int8_t num_part_tail;
+	if((((snake_list->head->x0)+pixel_size)>127  | snake_list->head->x0<0 | snake_list->head->y0<0 | ((snake_list->head->y0)+pixel_size)>63))
+		return 1;
+	num_part_tail= snake_list->tail->num_part;
+	RectangleFill(snake_list->tail->x0,snake_list->tail->y0,(snake_list->tail->x0)+pixel_size,(snake_list->tail->y0)+pixel_size,0);
+	RectangleDraw(1,1,126,62,1) ;
+	deleteLast_part(snake_list);
+	switch (direction)
+      	{
+		case 2 : //up
+			a[num_part_tail] = allocItem_snake(snake_list->head->x0,snake_list->head->y0-pixel_size,num_part_tail);
+			break;
+		case 6 : //right	
 		  	a[num_part_tail] = allocItem_snake(snake_list->head->x0+pixel_size,snake_list->head->y0,num_part_tail);
-				break;
-				
-				case		8 : //down
-        a[num_part_tail] = allocItem_snake(snake_list->head->x0,snake_list->head->y0+pixel_size,num_part_tail);
-				break;
-				
-				case		4 : //left
-				a[num_part_tail] = allocItem_snake(snake_list->head->x0-pixel_size,snake_list->head->y0,num_part_tail);	
-				break;
-				
-				default:
-				NULL;				
-		  }
-	
-    insertFirst_part(snake_list, &a[num_part_tail]);
-	  RectangleFill( a[num_part_tail].x0,a[num_part_tail].y0,(a[num_part_tail].x0)+pixel_size,(a[num_part_tail].y0)+pixel_size,1)	; 
-	  draw_LCD(DisplayBuf);		     // from display buffer to LCD
-	  return 0;
+			break;
+		case 8 : //down
+        		a[num_part_tail] = allocItem_snake(snake_list->head->x0,snake_list->head->y0+pixel_size,num_part_tail);
+			break;
+		case 4 : //left
+			a[num_part_tail] = allocItem_snake(snake_list->head->x0-pixel_size,snake_list->head->y0,num_part_tail);	
+			break;
+		default:
+			NULL;				
+	}
+   	insertFirst_part(snake_list, &a[num_part_tail]);
+	RectangleFill( a[num_part_tail].x0,a[num_part_tail].y0,(a[num_part_tail].x0)+pixel_size,(a[num_part_tail].y0)+pixel_size,1)	; 
+	draw_LCD(DisplayBuf);		     // from display buffer to LCD
+	return 0;
 }
 
 int8_t check_obstacle_collide(int8_t obstacle_on,list_snake* snake_list,obstacle* obstacle)
 {
-	    snake* b;
+	snake* b;
      	b= snake_list->head;
-			if(obstacle_on==1)
-			{
-				if( (((snake_list->head->x0+4)>=obstacle->x0)&(snake_list->head->x0<=(obstacle->x0+10)) &((snake_list->head->y0+4)>=obstacle->y0) &(snake_list->head->y0<=(obstacle->y0+10))) |
-            ((snake_list->head->x0<=(obstacle->x0+10))&((snake_list->head->x0+4)>=obstacle->x0) &((snake_list->head->y0+4)>=obstacle->y0) &(snake_list->head->y0<=(obstacle->y0+10))) |
-            (((snake_list->head->x0+4)>=obstacle->x0)&(snake_list->head->x0<=(obstacle->x0+10)) &(snake_list->head->y0<=(obstacle->y0+10)) &((snake_list->head->y0+4)>=obstacle->y0))	)
-					return 1;
-			}
-			else
-			{
-			while(b!=NULL)
-				{
-				if( (((b->x0+4)>=obstacle->x0)&(b->x0<=(obstacle->x0+10)) &((b->y0+4)>=obstacle->y0) &(b->y0<=(obstacle->y0+10))) |
-            ((b->x0<=(obstacle->x0+10))&((b->x0+4)>=obstacle->x0) &((b->y0+4)>=obstacle->y0) &(b->y0<=(obstacle->y0+10))) |
-            (((b->x0+4)>=obstacle->x0)&(b->x0<=(obstacle->x0+10)) &(b->y0<=(obstacle->y0+10)) &((b->y0+4)>=obstacle->y0))	)
-					return 1;
-				b = b->next;
-			}		
-			}	
+	if(obstacle_on==1)
+	{
+		if( (((snake_list->head->x0+4)>=obstacle->x0)&(snake_list->head->x0<=(obstacle->x0+10)) &((snake_list->head->y0+4)>=obstacle->y0) &(snake_list->head->y0<=(obstacle->y0+10))) |
+            	((snake_list->head->x0<=(obstacle->x0+10))&((snake_list->head->x0+4)>=obstacle->x0) &((snake_list->head->y0+4)>=obstacle->y0) &(snake_list->head->y0<=(obstacle->y0+10))) |
+            	(((snake_list->head->x0+4)>=obstacle->x0)&(snake_list->head->x0<=(obstacle->x0+10)) &(snake_list->head->y0<=(obstacle->y0+10)) &((snake_list->head->y0+4)>=obstacle->y0))	)
+			return 1;
+	}
+	else
+	{
+		while(b!=NULL)
+		{
+			if( (((b->x0+4)>=obstacle->x0)&(b->x0<=(obstacle->x0+10)) &((b->y0+4)>=obstacle->y0) &(b->y0<=(obstacle->y0+10))) |
+            		((b->x0<=(obstacle->x0+10))&((b->x0+4)>=obstacle->x0) &((b->y0+4)>=obstacle->y0) &(b->y0<=(obstacle->y0+10))) |
+            		(((b->x0+4)>=obstacle->x0)&(b->x0<=(obstacle->x0+10)) &(b->y0<=(obstacle->y0+10)) &((b->y0+4)>=obstacle->y0))	)
+				return 1;
+			b = b->next;
+		}		
+	}	
 }
 
 int8_t move_obstacle(int8_t obstacle_on, obstacle* obstacle1,obstacle* obstacle2 ,obstacle* obstacle3,obstacle* obstacle4 ,obstacle* obstacle5,list_snake* snake_list)
